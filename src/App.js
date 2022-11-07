@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import MovieDetails from "./pages/MovieDetails";
 import Register from "./pages/Register";
 import AuthProvider from "./context/AuthProvider";
-import Navbar from "./compoenets/Navbar";
+import Navbar from "./componets/Navbar";
 import AuthRouter from "./router/AuthRouter";
 
 function App() {

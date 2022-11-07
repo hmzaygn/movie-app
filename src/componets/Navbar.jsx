@@ -15,10 +15,12 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../auth/firebase";
+import { useAuthContext } from "../context/AuthProvider";
 
 const drawerWidth = 240;
 
 function Navbar(props) {
+  const { user } = useAuthContext();
   const navigate = useNavigate();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -40,23 +42,25 @@ function Navbar(props) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem onClick={() => navigate("/login")} disablePadding>
-          <ListItemButton sx={{ textAlign: "center" }}>
-            <ListItemText primary="Login" />
-          </ListItemButton>
-        </ListItem>
-
         <ListItem onClick={() => navigate("/register")} disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <ListItemText primary="Register" />
           </ListItemButton>
         </ListItem>
 
-        <ListItem onClick={() => logout()} disablePadding>
-          <ListItemButton sx={{ textAlign: "center" }}>
-            <ListItemText primary="Logout" />
-          </ListItemButton>
-        </ListItem>
+        {user ? (
+          <ListItem onClick={() => logout()} disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        ) : (
+          <ListItem onClick={() => navigate("/login")} disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemText primary="Login" />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </Box>
   );
@@ -101,13 +105,7 @@ function Navbar(props) {
             >
               Home
             </Button>
-            <Button
-              onClick={() => navigate("/login")}
-              variant="outlined"
-              sx={{ color: "#fff" }}
-            >
-              Login
-            </Button>
+
             <Button
               onClick={() => navigate("/register")}
               variant="outlined"
@@ -115,13 +113,28 @@ function Navbar(props) {
             >
               Register
             </Button>
-            <Button onClick={logout} variant="outlined" sx={{ color: "#fff" }}>
-              Logout
-            </Button>
+
+            {user ? (
+              <Button
+                onClick={logout}
+                variant="outlined"
+                sx={{ color: "#fff" }}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                onClick={() => navigate("/login")}
+                variant="outlined"
+                sx={{ color: "#fff" }}
+              >
+                Login
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
-      <Toolbar sx={{ mt: 1 }} />
+      <Toolbar />
       <Box component="nav">
         <Drawer
           container={container}

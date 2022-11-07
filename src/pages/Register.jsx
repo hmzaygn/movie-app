@@ -5,48 +5,70 @@ import Button from "@mui/material/Button";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../auth/firebase";
 import { useAuthContext } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import FingerprintIcon from "@mui/icons-material/Fingerprint";
 
 const Register = () => {
+  const navigate = useNavigate();
   const {
     registerEmail,
     setRegisterEmail,
     registerPassword,
     setRegisterPassword,
-    setUser,
   } = useAuthContext();
 
   const register = async () => {
     try {
-      const user = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         registerEmail,
         registerPassword
       );
-      setUser(user.user.email);
+
+      navigate("/");
     } catch (error) {
       console.log(error.message);
     }
   };
 
   return (
-    <Box sx={{ ml: 3 }}>
-      <TextField
-        onChange={(e) => setRegisterEmail(e.target.value)}
-        type="email"
-        id="email"
-        label="Email"
-        variant="filled"
-      />
-      <TextField
-        onChange={(e) => setRegisterPassword(e.target.value)}
-        type="password"
-        id="password"
-        label="Password"
-        variant="filled"
-      />
-      <Button onClick={register} variant="outlined">
-        Register
-      </Button>
+    <Box
+      className="login-container"
+      sx={{
+        height: "calc(100vh - 60px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Box className="input-area">
+        <TextField
+          margin="dense"
+          required
+          onChange={(e) => setRegisterEmail(e.target.value)}
+          type="email"
+          id="email"
+          label="Email"
+          variant="filled"
+        />
+        <TextField
+          margin="dense"
+          required
+          onChange={(e) => setRegisterPassword(e.target.value)}
+          type="password"
+          id="password"
+          label="Password"
+          variant="filled"
+        />
+        <Button
+          onClick={register}
+          startIcon={<FingerprintIcon />}
+          variant="contained"
+          size="large"
+        >
+          Register
+        </Button>
+      </Box>
     </Box>
   );
 };

@@ -68,7 +68,7 @@ function Navbar(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  const logout = async () => {
+  const logout = () => {
     signOut(auth);
   };
 
@@ -95,7 +95,7 @@ function Navbar(props) {
               cursor: "pointer",
             }}
           >
-            {"< HMZAYGN />"}
+            {user?.displayName || "< HMZAYGN />"}
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button

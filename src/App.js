@@ -14,7 +14,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route index element={<Main />} />
-          <Route path=":details" element={<AuthRouter />}>
+          <Route path="details/:id" element={<AuthRouter />}>
             <Route path="" element={<MovieDetails />} />
           </Route>
           <Route path="login" element={<Login />} />

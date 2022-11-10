@@ -41,6 +41,8 @@ const Main = () => {
     setUser(currentUser);
   });
 
+  // console.log(user);
+
   useEffect(() => {
     fetch(url)
       .then((res) => {
@@ -76,6 +78,7 @@ const Main = () => {
           label="Search a movie"
           variant="outlined"
           onChange={(e) => setMovieName(e.target.value)}
+          value={movieName}
         />
         <Button
           type="submit"
@@ -97,7 +100,7 @@ const Main = () => {
       >
         {movies.length > 0 &&
           movies.map((movie, index) => (
-            <MovieCards key={index} movie={movie} />
+            <MovieCards key={movie.id} movie={movie} />
           ))}
       </Box>
     </Box>
